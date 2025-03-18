@@ -2,4 +2,5 @@ apiVersion: argoproj.io/v1alpha1
 kind: RolloutManager
 metadata:
   name: argo-rollout
-spec: {}
+spec:
+  namespaceScoped: true
