@@ -20,6 +20,25 @@ OpenShift cluser must have:
 - OpenShift GitOps 1.13+
 - OpenShift Pipelines 1.11+
 
+OpenShift GitOps needs to be configured to support namespace scoped RolloutManager, this requires adding the
+following to the OpenShift GitOps Subscription object:
+
+```
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-gitops-operator
+spec:
+  # (...)
+  config:
+    env:
+      - name: NAMESPACE_SCOPED_ARGO_ROLLOUTS
+        value: 'true'
+```
+
+Note: if you are already using a cluster scoped RolloutManager you cannot deploy a namespace scoped instance. In this
+case you can simply use the cluster scoped one and comment out the RolloutManager from `environments/overlays/prod/kustomization.yaml`,
+
 ### Installing the Demo
 
 Note that this demo assumes it is being installed in a lab or test cluster where the user has full access to the openshift-gitops namespace. This process has been tested in RHDP using the OpenShift Workshop 4.13 catalog item.
